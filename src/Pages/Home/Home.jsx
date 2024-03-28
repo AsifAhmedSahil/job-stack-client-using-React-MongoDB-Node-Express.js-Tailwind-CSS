@@ -8,13 +8,18 @@ const Home = () => {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [isLoading,setIsLoading] = useState(true)
+  const [currentPage,setCurrentPage] = useState(1)
+  const itemPerPage = 6
 
   useEffect(() => {
+    setIsLoading(true)
     fetch("jobs.json")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data)
         setJobs(data);
+        setIsLoading(false)
       });
   }, []);
 
@@ -38,6 +43,14 @@ const Home = () => {
   const handleClick = (event) => {
     setSelectedCategory(event.target.value);
   };
+
+  // calculate the index range or pagination
+
+  const calculatePageIndex = () =>{
+    const startIndex = (currentPage - 1) * itemPerPage;
+    const endIndex = startIndex + itemPerPage;
+    return  {startIndex,endIndex}
+  }
 
   // main functions
 
@@ -83,7 +96,15 @@ const Home = () => {
 
 
         {/* {-----------job card  -----------} */}
-        <div className='bg-white p-4 rounded col-span-2'><Jobs result = {result}/></div>
+        <div className='bg-white p-4 rounded col-span-2'>
+          {
+            isLoading ? <p>Loading...</p> : result.length > 0 ? (<Jobs result = {result}/>) : <>
+              <h3 className="text-lg font-bold mb-3">{result.length} jobs</h3>
+              <p>No Jobs Found</p>
+            </>
+          }
+       
+          </div>
 
 
         
