@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Bannar from "../../assets/Components/Bannar";
 import Card from "../../assets/Components/Card";
 import Jobs from "../Jobs/Jobs";
+import Sidebar from "../../Sidebar/Sidebar";
 
 const Home = () => {
   const [query, setQuery] = useState("");
@@ -76,9 +77,21 @@ const Home = () => {
     <div>
       <Bannar query={query} handleInput={handleInput} />
 
-      <div>
-        <Jobs result={result} />
-      </div>
+      <div className='bg-[#FAFAFA] md:grid grid-cols-4 md:px-24 px-4 py-12'>
+        {/* {----------left side ---------} */}
+        <div className='bg-white p-4 rounded'><Sidebar handleChange={handleChange} handleClick={handleClick}/></div>
+
+
+        {/* {-----------job card  -----------} */}
+        <div className='bg-white p-4 rounded col-span-2'><Jobs result = {result}/></div>
+
+
+        
+        {/* {----------right side ---------} */}
+        <div className='bg-white p-4 rounded'>right</div>
+      
+      
+    </div>
     </div>
   );
 };
