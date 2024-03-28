@@ -52,6 +52,13 @@ const Home = () => {
     return  {startIndex,endIndex}
   }
 
+  // calculate next page function
+  const nextPage = () =>{
+    if(currentPage < Math.ceil(filteredItems.length / itemPerPage)){
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
   // main functions
 
   const filteredData = (jobs, selected, query) => {
