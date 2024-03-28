@@ -94,6 +94,10 @@ const Home = () => {
       );
       console.log(filteredjobs);
     }
+
+    // slice data based on current page
+    const {startIndex,endIndex} = calculatePageIndex();
+    filteredjobs = filteredjobs.slice(startIndex,endIndex)
      
     return filteredjobs.map((data, i) => <Card key={i} data={data} />);
   }
@@ -116,6 +120,17 @@ const Home = () => {
               <h3 className="text-lg font-bold mb-3">{result.length} jobs</h3>
               <p>No Jobs Found</p>
             </>
+          }
+
+          {/* pagination */}
+          {
+            result.length > 0 ? (
+              <div className="flex justify-center mt-5 space-x-8">
+                <button onClick={previousPage} disabled={currentPage === 1} className="hover:underline">Previos</button>
+                <span className="mx-2">Page {currentPage} of {Math.ceil(filteredItems.length / itemPerPage)}</span>
+                <button onClick={nextPage} className="hover:underline" disabled={currentPage === Math.ceil(filteredItems.length > itemPerPage)}>Next</button>
+              </div>
+            ) : ""
           }
        
           </div>
