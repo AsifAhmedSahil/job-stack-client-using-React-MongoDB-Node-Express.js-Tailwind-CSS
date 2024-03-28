@@ -59,6 +59,13 @@ const Home = () => {
     }
   }
 
+  // calculate previous page function
+  const previousPage = () =>{
+    if(currentPage > 1){
+      setCurrentPage(currentPage - 1);
+    }
+  }
+
   // main functions
 
   const filteredData = (jobs, selected, query) => {
