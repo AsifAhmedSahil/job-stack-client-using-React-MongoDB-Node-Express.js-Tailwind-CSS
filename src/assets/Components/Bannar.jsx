@@ -34,7 +34,7 @@ const Bannar = ({query,handleInput}) => {
               placeholder="Location"
               className="block flex-1 border-0 bg-transparent pl-8 py-1.5 text-gray-800 placeholder:text-gray-400 focus:right-0 sm:text-sm sm:leading-6"
               
-              value={""}
+              
             />
             <IoLocationOutline className="absolute mt-2.5 ml-2 text-gray-400" />
           </div>
