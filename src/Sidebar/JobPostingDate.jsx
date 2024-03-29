@@ -9,7 +9,9 @@ const JobPostingDate = ({handleChange}) => {
 
     // convert to string
     const lastTwentyFourHourAgoDate = lastTwentyFourHourAgo.toISOString().slice(0,10)
-    console.log(lastTwentyFourHourAgoDate)
+    const sevenDaysAgoDate = sevenDaysAgo.toISOString().slice(0,10)
+    const thirtyDaysAgoDate = thirtyDaysAgo.toISOString().slice(0,10)
+    // console.log(lastTwentyFourHourAgoDate)
 
     
   return (
@@ -25,33 +27,28 @@ const JobPostingDate = ({handleChange}) => {
           value=""
           onChange={handleChange}
         />
-        <span className="checkmark"></span> All
+        <span className="checkmark"></span> All Time
       </label>
 
       <InputField
         handleChange={handleChange}
         name="test"
-        value="London"
-        title="London"
+        value={lastTwentyFourHourAgoDate}
+        title="Last 24 Hours"
       />
       <InputField
         handleChange={handleChange}
         name="test"
-        value="seattle"
-        title="Seattle"
+        value={sevenDaysAgoDate}
+        title="Last 7 Days"
       />
       <InputField
         handleChange={handleChange}
         name="test"
-        value="madrid"
-        title="Madrid"
+        value={thirtyDaysAgoDate}
+        title="Last Month"
       />
-      <InputField
-        handleChange={handleChange}
-        name="test"
-        value="boston"
-        title="Boston"
-      />
+      
     </div>
   </div>
   )
