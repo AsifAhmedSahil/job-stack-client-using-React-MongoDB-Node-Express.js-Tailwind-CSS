@@ -3,6 +3,7 @@ import Bannar from "../../assets/Components/Bannar";
 import Card from "../../assets/Components/Card";
 import Jobs from "../Jobs/Jobs";
 import Sidebar from "../../Sidebar/Sidebar";
+import NewsLetter from "../../Sidebar/NewsLetter";
 
 const Home = () => {
   const [query, setQuery] = useState("");
@@ -140,7 +141,7 @@ const Home = () => {
 
         
         {/* {----------right side ---------} */}
-        <div className='bg-white p-4 rounded'>right</div>
+        <div className='bg-white p-4 rounded'><NewsLetter/></div>
       
       
     </div>
