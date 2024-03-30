@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import CreatableSelect from 'react-select/creatable';
 
 const PostJob = () => {
+  const [selectedOptions , setSelectedOptions] = useState(null)
   const {
     register,
     handleSubmit,
@@ -10,6 +12,18 @@ const PostJob = () => {
   } = useForm();
 
   const onSubmit = (data) => console.log(data);
+
+  const options = [
+    {value: "JavaScript", label: "JavaScript"},
+    {value: "React", label: "React "},
+    {value: "Node", label: "Node"},
+    {value: "Express", label: "Express"},
+    {value: "Python", label: "Python"},
+    {value: "C++", label: "C++"},
+    {value: "Next", label: "Next"},
+    {value: "HTML", label: "HTML"},
+    {value: "CSS", label: "CSS"}
+  ]
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
@@ -107,6 +121,22 @@ const PostJob = () => {
               </select>
             </div>
           </div>
+
+          {/* 5th row----------- */}
+
+          <div>
+            <label className="text-lg mb-2 block"> Required Skill Sets: </label>
+            <CreatableSelect
+             className="create-job-input"
+             defaultValue={selectedOptions}
+             onChange={setSelectedOptions}
+             options={options}
+             isMulti
+            />
+
+          </div>
+          
+
 
           <input type="submit" className="mt-10 cursor-pointer font-bold px-8 py-2 block bg-blue text-white rounded mx-auto" />
         </form>
