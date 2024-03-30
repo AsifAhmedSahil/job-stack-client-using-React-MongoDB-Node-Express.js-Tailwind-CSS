@@ -15,7 +15,8 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch("jobs.json")
+    fetch("http://localhost:3000/all-jobs")
+    // fetch("jobs.json")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data)

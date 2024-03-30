@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
+import Swal from "sweetalert2";
 
 const PostJob = () => {
   const [selectedOptions , setSelectedOptions] = useState(null)
   const {
     register,
-    handleSubmit,
+    handleSubmit,reset,
 
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) =>{
+    fetch("http://localhost:3000/post-job" , {
+      method: "POST",
+      headers: {'content-type': "application/json"},
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then((data =>{
+      console.log(data)
+      if(data.insertedId){
+        reset()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your Job has been posted",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    }))
+
+  }
 
   const options = [
     {value: "JavaScript", label: "JavaScript"},
