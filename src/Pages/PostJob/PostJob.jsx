@@ -135,6 +135,56 @@ const PostJob = () => {
             />
 
           </div>
+
+          {/* 6th row --------- */}
+
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+            
+            <div className="lg:w-1/2 w-full">
+              <label className="text-lg mb-2 block"> Company Logo </label>
+              <input
+                type="url"
+                placeholder="Your Company logo url"
+                {...register("companyLogo")}
+                className="create-job-input"
+              />
+            </div>
+
+            <div className="lg:w-1/2 w-full">
+              <label className="text-lg mb-2 block"> Employement Type </label>
+              <select {...register("employmentType")} className="create-job-input">
+                <option value="">Choose Employment Type</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Temporary">Temporary</option>
+              </select>
+            </div>
+          </div>
+
+          {/* 7th Row--------- */}
+
+          <div className="w-full">
+          <label className="text-lg mb-2 block"> Job Description </label>
+          <textarea {...register("description")} placeholder="Enter You Job Details Here" className="py-1.5 pl-3 text-gray-800 w-full focus:outline-none" rows={6}/>
+
+
+
+          </div>
+
+
+          {/* Last Row---------- */}
+
+          <div className="w-full">
+          <label className="text-lg mb-2 block"> Job Posted By: </label>
+              <input
+                type="email"
+                placeholder="Enter Your Email "
+                {...register("postedBy")}
+                className="create-job-input"
+              />
+
+
+          </div>
           
 
 
