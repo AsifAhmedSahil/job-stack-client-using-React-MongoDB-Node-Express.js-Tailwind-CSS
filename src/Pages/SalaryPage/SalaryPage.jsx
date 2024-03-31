@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PageHeader from '../../assets/Components/PageHeader'
 
 const SalaryPage = () => {
+    const [searchText , setSearchText] = useState("")
+    const [salary , setSalary] = useState([])
+    console.log(searchText)
+
+    useEffect(() =>{
+        fetch("http://localhost:3000/salary")
+        .then(res => res.json())
+        .then((data) =>{
+            console.log(data)
+            setSalary(data)
+        })
+    },[])
+
+    const handleSearch = () => {
+        const filter = salary.filter(
+          (job) =>
+            job.title.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
+        );
+        console.log(filter)
+        
+        setSalary(filter)
+      };
+
+
   return (
     <div className="max-w-screen-2xl container mx-auto lg:px-24 px-4">
         <PageHeader title={"Estimated Salary"}/>
@@ -13,11 +37,12 @@ const SalaryPage = () => {
             type="text "
             name="search"
             id="search"
+            
             className="lg:w-6/12 w-full py-2 pl-3 border focus:outline-none  mb-4"
           />
           <button
             className="bg-blue text-white py-2 px-8 mb-4 rounded-sm"
-            // onClick={handleSearch}
+            onClick={handleSearch}
           >
             Search
           </button>
