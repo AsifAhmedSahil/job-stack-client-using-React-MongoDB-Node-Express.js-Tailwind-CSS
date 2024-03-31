@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import PageHeader from "../../assets/Components/PageHeader";
 
 const MyJobs = () => {
   const email = "sahil@gmail.com";
@@ -10,8 +12,19 @@ const MyJobs = () => {
   const [searchText, setSearchText] = useState("");
   const [jobs, setJobs] = useState([]);
 
-  const [currentPage,setCurrentPage] = useState(1)
-  const itemPerPage = 4
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemPerPage = 4;
+
+
+//   const { data: job = [], refetch } = useQuery({
+//     queryKey: ["jobs"],
+//     queryFn: async () => {
+//       const res = fetch(`http://localhost:3000/myJobs/${email}`)
+      
+//       return res.data;
+//       console.log(data)
+//     },
+// })
 
   useEffect(() => {
     setISLoading(true);
@@ -21,7 +34,6 @@ const MyJobs = () => {
         console.log(data);
         setJobs(data);
         setISLoading(false);
-        
       });
   }, [searchText]);
 
@@ -29,22 +41,21 @@ const MyJobs = () => {
 
   const indexOfLaseItem = currentPage * itemPerPage;
   const indexOfFirstItem = indexOfLaseItem - itemPerPage;
-  const currentJob = jobs.slice(indexOfFirstItem,indexOfLaseItem);
+  const currentJob = jobs.slice(indexOfFirstItem, indexOfLaseItem);
 
   // next page btn
 
-  const nextPage = () =>{
-    if(indexOfLaseItem < jobs.length) {
+  const nextPage = () => {
+    if (indexOfLaseItem < jobs.length) {
       setCurrentPage(currentPage + 1);
-
     }
-  }
+  };
 
-  const previousPage = () =>{
-    if(currentPage > 1){
-      setCurrentPage(currentPage -1)
+  const previousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
-  }
+  };
 
   const handleSearch = () => {
     const filter = jobs.filter(
@@ -98,6 +109,7 @@ const MyJobs = () => {
   };
   return (
     <div className="max-w-screen-2xl container mx-auto lg:px-24 px-4">
+      <PageHeader title={"My Job Page"}/>
       <div>
         <h1 className="text-center text-2xl mt-6 mb-4">All My Jobs</h1>
         <div className="text-center mb-4 mt-12">
@@ -165,8 +177,10 @@ const MyJobs = () => {
                       </tr>
                     </thead>
 
-                    {
-                      isLoading ? (<div className="text-2xl text-blue">Loading...</div>) : (<tbody>
+                    {isLoading ? (
+                      <div className="text-2xl text-blue">Loading...</div>
+                    ) : (
+                      <tbody>
                         {currentJob.map((job, index) => (
                           <tr key={index}>
                             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
@@ -206,28 +220,23 @@ const MyJobs = () => {
                             </td>
                           </tr>
                         ))}
-                      </tbody>)
-                    }
-
-                    
+                      </tbody>
+                    )}
                   </table>
-
-                  
                 </div>
-                
               </div>
               <div className="text-center text-base text-black space-x-8 mt-8">
-                    {
-                      currentPage > 1 && (
-                        <button onClick={previousPage} className="focus:underline">Previous</button>
-                      )
-                    }
-                    {
-                      indexOfLaseItem < jobs.length && (
-                        <button onClick={nextPage} className="focus:underline">Next</button>
-                      )
-                    }
-                  </div>
+                {currentPage > 1 && (
+                  <button onClick={previousPage} className="focus:underline">
+                    Previous
+                  </button>
+                )}
+                {indexOfLaseItem < jobs.length && (
+                  <button onClick={nextPage} className="focus:underline">
+                    Next
+                  </button>
+                )}
+              </div>
             </div>
           </section>
         </div>
