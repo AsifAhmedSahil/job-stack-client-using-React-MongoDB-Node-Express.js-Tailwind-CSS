@@ -47,11 +47,15 @@ const SalaryPage = () => {
       </div>
 
       {/* salary display card */}
-      <div className="text-black">
+      <div className="text-black grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-12 mt-8 items-center">
         {salary.map((data) => (
-          <div key={data._id}>
-            <h4>{data.title}</h4>
-            <p>{data.salary}</p>
+          <div key={data._id} className="shadow px-8 py-12">
+            <h4 className="text-xl font-bold  ">{data.title}</h4>
+            <p className="font-semibold text-blue text-base ">{data.salary}</p>
+            <div className="flex flex-wrap gap-4 ">
+              <a href="/" className="underline text-blue">{data.status}</a>
+              <a href="/" className="underline text-blue">{data.skills}</a>
+            </div>
           </div>
         ))}
       </div>
