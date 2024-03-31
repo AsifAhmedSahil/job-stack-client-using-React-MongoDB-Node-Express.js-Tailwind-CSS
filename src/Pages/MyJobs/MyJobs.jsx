@@ -10,6 +10,9 @@ const MyJobs = () => {
   const [searchText, setSearchText] = useState("");
   const [jobs, setJobs] = useState([]);
 
+  const [currentPage,setCurrentPage] = useState(1)
+  const itemPerPage = 4
+
   useEffect(() => {
     setISLoading(true);
     fetch(`http://localhost:3000/myJobs/${email}`)
@@ -18,8 +21,30 @@ const MyJobs = () => {
         console.log(data);
         setJobs(data);
         setISLoading(false);
+        
       });
   }, [searchText]);
+
+  // pagination calculation
+
+  const indexOfLaseItem = currentPage * itemPerPage;
+  const indexOfFirstItem = indexOfLaseItem - itemPerPage;
+  const currentJob = jobs.slice(indexOfFirstItem,indexOfLaseItem);
+
+  // next page btn
+
+  const nextPage = () =>{
+    if(indexOfLaseItem < jobs.length) {
+      setCurrentPage(currentPage + 1);
+
+    }
+  }
+
+  const previousPage = () =>{
+    if(currentPage > 1){
+      setCurrentPage(currentPage -1)
+    }
+  }
 
   const handleSearch = () => {
     const filter = jobs.filter(
