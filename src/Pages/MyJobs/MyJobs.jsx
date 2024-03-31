@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const MyJobs = () => {
   const email = "sahil@gmail.com";
@@ -29,7 +30,50 @@ const MyJobs = () => {
     setISLoading(false);
   };
 
-  const handleDelete = (id) =>{
+
+
+  const handleDelete = (id,jobTitle) =>{
+    // fetch(`http://localhost:3000/job/${id}`,{
+    //   method:"DELETE"
+    // })
+    // .then(res => res.json())
+    // .then(data =>{
+    //   console.log(data)
+    //   if(data.deletedCount > 0){
+
+    //   }
+      
+    // })
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Want to delete this job ${jobTitle} job ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/job/${id}`,{
+      method:"DELETE"
+    })
+    .then(res => res.json())
+    .then(data =>{
+      console.log(data);
+      if(data.deletedCount > 0){
+        Swal.fire({
+          title: "Deleted!",
+          text: `${data.jobTitle} job has been deleted.`,
+          icon: "success"
+        });
+
+      }
+    })
+        
+        
+      }
+    });
     
   }
   return (
@@ -122,7 +166,7 @@ const MyJobs = () => {
                           <button className=""><Link to={`/edit-job/${job._id}`}><FaEdit size={20} className="text-blue"></FaEdit></Link></button>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <Link onClick={() => handleDelete(job._id)}><FaTrashAlt size={20} className="text-red-600"></FaTrashAlt></Link>
+                        <Link onClick={() => handleDelete(job._id,job.jobTitle)}><FaTrashAlt size={20} className="text-red-600"></FaTrashAlt></Link>
                         </td>
                       </tr>
                         )
