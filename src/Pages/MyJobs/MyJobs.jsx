@@ -17,8 +17,9 @@ const MyJobs = () => {
       .then((data) => {
         console.log(data);
         setJobs(data);
+        setISLoading(false);
       });
-  }, []);
+  }, [searchText]);
 
   const handleSearch = () => {
     const filter = jobs.filter(
@@ -30,9 +31,7 @@ const MyJobs = () => {
     setISLoading(false);
   };
 
-
-
-  const handleDelete = (id,jobTitle) =>{
+  const handleDelete = (id, jobTitle) => {
     // fetch(`http://localhost:3000/job/${id}`,{
     //   method:"DELETE"
     // })
@@ -42,7 +41,7 @@ const MyJobs = () => {
     //   if(data.deletedCount > 0){
 
     //   }
-      
+
     // })
 
     Swal.fire({
@@ -52,30 +51,26 @@ const MyJobs = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/job/${id}`,{
-      method:"DELETE"
-    })
-    .then(res => res.json())
-    .then(data =>{
-      console.log(data);
-      if(data.deletedCount > 0){
-        Swal.fire({
-          title: "Deleted!",
-          text: `${data.jobTitle} job has been deleted.`,
-          icon: "success"
-        });
-
-      }
-    })
-        
-        
+        fetch(`http://localhost:3000/job/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: `${data.jobTitle} job has been deleted.`,
+                icon: "success",
+              });
+            }
+          });
       }
     });
-    
-  }
+  };
   return (
     <div className="max-w-screen-2xl container mx-auto lg:px-24 px-4">
       <div>
@@ -108,13 +103,13 @@ const MyJobs = () => {
                       </h3>
                     </div>
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                      <Link to='/post-job'>
-                      <button
-                        className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                      >
-                        Post a job
-                      </button>
+                      <Link to="/post-job">
+                        <button
+                          className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          type="button"
+                        >
+                          Post a job
+                        </button>
                       </Link>
                     </div>
                   </div>
@@ -128,10 +123,10 @@ const MyJobs = () => {
                           No.
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                         Title
+                          Title
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Company Name
+                          Company Name
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                           Salary
@@ -145,47 +140,55 @@ const MyJobs = () => {
                       </tr>
                     </thead>
 
-                    <tbody>
-                      {
-                        jobs.map((job,index) =>(
+                    {
+                      isLoading ? (<div className="text-2xl text-blue">Loading...</div>) : (<tbody>
+                        {jobs.map((job, index) => (
                           <tr key={index}>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                          {index+1}
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                          {job.jobTitle}
-                        </td>
-                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {job.companyName}
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                          $ {job.minPrice}k - $ {job.maxPrice}k
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <button className=""><Link to={`/edit-job/${job._id}`}><FaEdit size={20} className="text-blue"></FaEdit></Link></button>
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <Link onClick={() => handleDelete(job._id,job.jobTitle)}><FaTrashAlt size={20} className="text-red-600"></FaTrashAlt></Link>
-                        </td>
-                      </tr>
-                        )
+                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                              {index + 1}
+                            </th>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                              {job.jobTitle}
+                            </td>
+                            <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              {job.companyName}
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                              $ {job.minPrice}k - $ {job.maxPrice}k
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <button className="">
+                                <Link to={`/edit-job/${job._id}`}>
+                                  <FaEdit
+                                    size={20}
+                                    className="text-blue"
+                                  ></FaEdit>
+                                </Link>
+                              </button>
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <Link
+                                onClick={() =>
+                                  handleDelete(job._id, job.jobTitle)
+                                }
+                              >
+                                <FaTrashAlt
+                                  size={20}
+                                  className="text-red-600"
+                                ></FaTrashAlt>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>)
+                    }
 
-                          
-                          
-                          
-
-
-                        )
-                      }
-                      
-                      
-                    </tbody>
+                    
                   </table>
                 </div>
               </div>
             </div>
-          
           </section>
         </div>
       </div>
