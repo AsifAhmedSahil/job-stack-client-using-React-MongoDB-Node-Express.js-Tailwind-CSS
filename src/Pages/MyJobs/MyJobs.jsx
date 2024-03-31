@@ -167,7 +167,7 @@ const MyJobs = () => {
 
                     {
                       isLoading ? (<div className="text-2xl text-blue">Loading...</div>) : (<tbody>
-                        {jobs.map((job, index) => (
+                        {currentJob.map((job, index) => (
                           <tr key={index}>
                             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                               {index + 1}
@@ -211,8 +211,23 @@ const MyJobs = () => {
 
                     
                   </table>
+
+                  
                 </div>
+                
               </div>
+              <div className="text-center text-base text-black space-x-8 mt-8">
+                    {
+                      currentPage > 1 && (
+                        <button onClick={previousPage} className="focus:underline">Previous</button>
+                      )
+                    }
+                    {
+                      indexOfLaseItem < jobs.length && (
+                        <button onClick={nextPage} className="focus:underline">Next</button>
+                      )
+                    }
+                  </div>
             </div>
           </section>
         </div>
