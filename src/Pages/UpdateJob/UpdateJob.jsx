@@ -7,9 +7,9 @@ import Swal from "sweetalert2";
 
 
 const UpdateJob = () => {
-  const id = useParams()
+  const {id} = useParams()
   console.log(id)
-  const {_id,jobTitle,companyName,companyLogo,minPrice,maxPrice,salaryType,jobLocation,postingDate,experienceLevel,employmentType,description,postedBy} = useLoaderData()
+  const {_id,jobTitle,companyName,companyLogo,minPrice,maxPrice,salaryType,jobLocation,postingDate,experienceLevel,employmentType,description,postedBy,skills} = useLoaderData()
 
   console.log(jobTitle)
 
@@ -22,20 +22,21 @@ const UpdateJob = () => {
   } = useForm();
 
   const onSubmit = (data) =>{
-    fetch("http://localhost:3000/post-job" , {
-      method: "POST",
+    data.skills === selectedOptions
+    fetch(`http://localhost:3000/update-job/${id}` , {
+      method: "PATCH",
       headers: {'content-type': "application/json"},
       body: JSON.stringify(data)
     })
     .then(res => res.json())
     .then((data =>{
       console.log(data)
-      if(data.insertedId){
+      if(data.modifiedCount > 0){
         reset()
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Your Job has been posted",
+          title: "Your Job Updated Successfully",
           showConfirmButton: false,
           timer: 1500
         });
@@ -117,7 +118,7 @@ const UpdateJob = () => {
               <label className="text-lg mb-2 block"> Salary Type </label>
               
               <select {...register("salaryType")} defaultValue={salaryType} className="create-job-input">
-                <option value="">Choose Your Salary</option>
+                <option value={salaryType}>{salaryType}</option>
                 <option value="Hourly">Hourly</option>
                 <option value="Monthly">Monthly</option>
                 <option value="Yearly">Yearly</option>
@@ -152,8 +153,8 @@ const UpdateJob = () => {
 
             <div className="lg:w-1/2 w-full">
               <label className="text-lg mb-2 block"> Experience Level </label>
-              <select {...register("experienceLevel")} defaultValue={experienceLevel} className="create-job-input">
-                <option value="">Choose Experience Level</option>
+              <select {...register("experienceLevel")} className="create-job-input">
+                <option value={experienceLevel}>{experienceLevel}</option>
                 <option value="Any experience">No Experience</option>
                 <option value="Work remotely">Work remotely</option>
                 <option value="Intership">Intership</option>
@@ -167,7 +168,7 @@ const UpdateJob = () => {
             <label className="text-lg mb-2 block"> Required Skill Sets: </label>
             <CreatableSelect
              className="create-job-input"
-             defaultValue={selectedOptions}
+             defaultValue={skills}
              onChange={setSelectedOptions}
              options={options}
              isMulti
@@ -192,8 +193,8 @@ const UpdateJob = () => {
 
             <div className="lg:w-1/2 w-full">
               <label className="text-lg mb-2 block"> Employement Type </label>
-              <select {...register("employmentType")} defaultValue={employmentType} className="create-job-input">
-                <option value="">Choose Employment Type</option>
+              <select {...register("employmentType")}  className="create-job-input">
+                <option value={employmentType}>{employmentType}</option>
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
                 <option value="Temporary">Temporary</option>
