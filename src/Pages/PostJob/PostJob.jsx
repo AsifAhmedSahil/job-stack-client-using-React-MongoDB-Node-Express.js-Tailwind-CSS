@@ -13,6 +13,8 @@ const PostJob = () => {
   } = useForm();
 
   const onSubmit = (data) =>{
+    data.skills = selectedOptions
+    console.log(selectedOptions)
     fetch("http://localhost:3000/post-job" , {
       method: "POST",
       headers: {'content-type': "application/json"},
@@ -155,6 +157,8 @@ const PostJob = () => {
              options={options}
              isMulti
             />
+
+            
 
           </div>
 
