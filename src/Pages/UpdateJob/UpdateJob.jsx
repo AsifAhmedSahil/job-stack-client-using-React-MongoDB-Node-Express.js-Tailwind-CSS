@@ -12,6 +12,7 @@ const UpdateJob = () => {
   const {_id,jobTitle,companyName,companyLogo,minPrice,maxPrice,salaryType,jobLocation,postingDate,experienceLevel,employmentType,description,postedBy,skills} = useLoaderData()
 
   console.log(jobTitle)
+  // console.log(subtitle)
 
   const [selectedOptions , setSelectedOptions] = useState(null)
   const {

@@ -56,6 +56,7 @@ const MyJobs = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+  
 
   const handleSearch = () => {
     const filter = jobs.filter(
